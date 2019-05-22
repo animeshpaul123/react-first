@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium'
 import Person from './Person/Person'
 
 class App extends Component {
@@ -46,6 +47,22 @@ class App extends Component {
     this.setState({persons: persons})
   }
  render() {
+
+  const style = {
+    background: 'green',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '2px'
+  }
+
+  const classes = [];
+  if(this.state.persons.length <= 2) {
+    classes.push('red');
+  }
+  if(this.state.persons.length <= 1) {
+    classes.push('bold');
+  }
    let persons = null;
    if(this.state.showPersons) {
     persons = (
@@ -59,16 +76,19 @@ class App extends Component {
             change={(event) => this.nameChangedHandler(event, person.id)}/>
         })}
       </div>
-    )
+    );
+    style.background = 'red';
    }
+
   return (
     <div className="App">
       <h1>hi, welcome to react app</h1>
-      <button onClick={this.togglePersons}>Click here</button>
+      <p className={classes.join(' ')}>it really works</p>
+      <button onClick={this.togglePersons} style={style}>Click here</button>
       {persons}
     </div>
   );
  }
 }
 
-export default App;
+export default Radium(App);
